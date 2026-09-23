@@ -1,0 +1,11 @@
+.chat-layout{
+    display: flex;
+    height: 100vh;
+}
+.chat-layout aside{
+    width: 250px;
+    border-right: 1px solid black;
+}
+.chat-layout main{
+    flex: 1;
+}

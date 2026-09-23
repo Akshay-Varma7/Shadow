@@ -1,25 +1,25 @@
-import { nav,NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+//nav is a html tag
+const chats = [{id:1,title:"meher"}]
 
 function SidePage(){
 
     return(
         <>
-            <aside>
-                <button>New Chat</button>
+            <button>New Chat</button>
 
-                <nav>
-                    {
-                        chats.map((c)=>(
-                            <NavLink 
-                                key={c.id}
-                                to={`/chat/${c.id}`}
-                            >
-                                {c.title}
-                            </NavLink>
-                        ))
-                    }
-                </nav>
-            </aside>
+            <nav>
+                {
+                    chats.map((c)=>(
+                        <NavLink 
+                            key={c.id}
+                            to={`/chat/${c.id}`}
+                        >
+                            {c.title}
+                        </NavLink>
+                    ))
+                }
+            </nav>
         </>
     )
 }

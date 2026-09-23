@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<HomePage/>} />
 
         <Route path="/chat" element={<ChatLayout />}>
-          <Route index element={<SidePage />} /> {/* stays all time */}
+          {/* <Route index element={<SidePage />} /> stays all time */}
           <Route path=":chatId" element={<ChatPage />} />
         </Route>
       </Routes>
