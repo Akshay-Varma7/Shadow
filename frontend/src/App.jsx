@@ -5,7 +5,7 @@ import { BrowserRouter,Routes,Route } from "react-router-dom"//inside another L 
 import ChatLayout from './layouts/ChatLayout'
 import ChatPage from "./pages/ChatPage"
 import HomePage from "./pages/HomePage"
-
+//pagination or some fetching in messages
 function App() {
 
   return (
