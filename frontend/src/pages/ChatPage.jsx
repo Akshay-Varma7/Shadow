@@ -64,7 +64,7 @@ function ChatPage(){
     return(
         <>
             <Messages messages={messages} setMessages={setMessages}/>
-            <InputBox messages={messages} setMessages={setMessages}/>
+            <InputBox chatId={chatId} messages={messages} setMessages={setMessages}/>
         </>
     )
 }

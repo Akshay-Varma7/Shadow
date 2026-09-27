@@ -15,16 +15,19 @@ const initial = [
         lastupdatedAt: Date()
     }
 ]
-
+function newChat(){
+    const r = Math.floor(Math.random()*10000)+1
+    return {
+        chatId: r,
+        title: `new chat ${r}`,//how?
+        lastupdatedAt: Date()
+    }
+}
 function SidePage(){
     const [chats,setChats] = useState(initial);
     const click = (e)=>{
         e.preventDefault();
-        setChats([...chats,{//try a function to mimic sending and getting struc db math.random for id
-            chatId: 1,
-            title: "greeting",
-            lastupdatedAt: Date()
-        }])
+        setChats([...chats,newChat()])
     }
     return(
         <>
