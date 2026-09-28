@@ -11,6 +11,8 @@ class Role(str,Enum):#2 inherits?-MessageRole.USER == "user" if not MessageRole.
 def now():
     return datetime.now(ZoneInfo("Asia/Kolkata"))
 
+#or Base = DeclarativeBase()//the class whos instance is class?=A metaclass(source-type) is the class that creates classes
+#a class is also an obj
 class Base(DeclarativeBase):
     pass
 

@@ -9,8 +9,8 @@ class ChatService:
     def get_chats(self) -> list[Chat]:
         return self._db.query(Chat).all()
 
-    def get_chat(self,chat_id: int) -> Chat | None:
-        return self._db.query(Chat).filter(Chat.chat_id == chat_id).first()#.first() - optimised
+    # def get_chat(self,chat_id: int) -> Chat | None:
+    #     return self._db.query(Chat).filter(Chat.chat_id == chat_id).first()#.first() - optimised
 
     def create_chat(self) -> Chat:
         new_chat = Chat()
