@@ -1,0 +1,9 @@
+/* global styles
+*{
+    color: whitesmoke;
+} */
+
+/* by default browser gives 8px margin around */
+body{
+    margin: 0;
+}

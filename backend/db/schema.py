@@ -4,27 +4,25 @@ from datetime import datetime#python type
 from zoneinfo import ZoneInfo
 from enum import Enum
 
-class Role(str,Enum):#2 inherits?-MessageRole.USER == "user" if not MessageRole.USER is a member of enum not string or value?
+class Role(str,Enum):
     USER = "user"#not dict for:
     SYSTEM = "system"
 
 def now():
     return datetime.now(ZoneInfo("Asia/Kolkata"))
 
-#or Base = DeclarativeBase()//the class whos instance is class?=A metaclass(source-type) is the class that creates classes
-#a class is also an obj
 class Base(DeclarativeBase):
     pass
 
 class Chat(Base):
-    __tablename__ = "Chat"#naming same as class
+    __tablename__ = "Chat"
 
-    chat_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True) #optional
-    title: Mapped[str | None] = mapped_column(nullable=True)#can change in st creation or msg 
+    chat_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    title: Mapped[str | None] = mapped_column(nullable=True)
     latest_cycle: Mapped[int] = mapped_column(default=0)
 
     #reverse relation
-    messages: Mapped[list["Message"]] = relationship(#relation Table(not class)
+    messages: Mapped[list["Message"]] = relationship(
         back_populates="chat"#relation attribute
     )
 

@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { useState , Fragment } from "react";
-//nav is a html tag
+import { useState , useEffect , Fragment } from "react";
 
-//of a user
+from dotenv import load_dotenv
+load_dotenv()
+BE_URL = os.getenv("BE_URL")
+
 const initial = [
     {
         chatId: 1,
@@ -25,10 +27,25 @@ function newChat(){
 }
 function SidePage(){
     const [chats,setChats] = useState(initial);
+    const [currChatId,setCurrChatId] = useState();
+    const getChats = async () =>{
+        try{
+            const res = await fetch(`${DB_URL}/get_chats`);
+            const res = res.json();//as no mw like: express.json()
+            const structureRes = res.map(chat =>({ chatId: chat.chat_id,chatTitle: chat.title}))
+            setChats(structureRes);
+        }catch(err){
+            console.log(err)
+        }
+    }
     const click = (e)=>{
         e.preventDefault();
         setChats([...chats,newChat()])
     }
+    //{}= currChatId
+    useEffect(()=>{
+        getChats();
+    },[currChatId]);
     return(
         <>
             <button onClick={click}>New Chat</button>
@@ -52,5 +69,3 @@ function SidePage(){
 }
 
 export default SidePage;
-// Use NavLink when the thing is fundamentally a navigation link.
-// Use button + navigate() when clicking the button performs an action that happens to cause navigation.

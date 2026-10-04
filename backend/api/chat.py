@@ -7,10 +7,10 @@ from backend.services.chat_service import ChatService
 router = APIRouter()
 
 def get_chat_service() -> ChatService:#
-    return ChatService(session=SessionLocal())#dont want one service shared by every req
+    return ChatService(session=SessionLocal())
 
 @router.get("/",response_model=list[ChatCheck])#response_model
-def get_chats(service: ChatService = Depends(get_chat_service)):#when request Depends inside func defn runs
+def get_chats(service: ChatService = Depends(get_chat_service)):
     return service.get_chats()
 
 @router.post("/",response_model=ChatCheck)
