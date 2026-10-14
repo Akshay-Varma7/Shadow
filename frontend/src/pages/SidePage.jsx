@@ -1,22 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { useState , useEffect , Fragment } from "react";
+import { useEffect , Fragment } from "react";
+import { useChat } from "../components/Context";
 
-from dotenv import load_dotenv
-load_dotenv()
-BE_URL = os.getenv("BE_URL")
+const BE_URL = import.meta.env.VITE_BE_URL;
 
-const initial = [
-    {
-        chatId: 1,
-        title: "greeting",
-        lastupdatedAt: Date()
-    },
-    {
-        chatId: 2,
-        title: "universe origin",
-        lastupdatedAt: Date()
-    }
-]
 function newChat(){
     const r = Math.floor(Math.random()*10000)+1
     return {
@@ -26,16 +13,26 @@ function newChat(){
     }
 }
 function SidePage(){
-    const [chats,setChats] = useState(initial);
-    const [currChatId,setCurrChatId] = useState();
-    const getChats = async () =>{
-        try{
-            const res = await fetch(`${DB_URL}/get_chats`);
-            const res = res.json();//as no mw like: express.json()
-            const structureRes = res.map(chat =>({ chatId: chat.chat_id,chatTitle: chat.title}))
-            setChats(structureRes);
-        }catch(err){
-            console.log(err)
+    const {
+        chats,
+        setChats,
+        currChatId,
+        setCurrChatId,//?
+    } = useChat();
+    async function getChats() {
+        try {
+            const response = await fetch(
+                `http://${BE_URL}/get_chats`
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            const finalRes = await response.json();
+                setChats(finalRes);
+        } catch (error) {
+            console.warn("Backend unavailable; using local chats.", error);
+            // Don't clear chats already created in frontend state.
         }
     }
     const click = (e)=>{

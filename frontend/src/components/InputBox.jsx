@@ -13,17 +13,18 @@ function newMsg(m,chatid){
     }
 }
 function InputBox({chatId,messages,setMessages}){
-    const [msg,setMsg] = useState("");
+    //local state
+    const [req, setReq] = useState("");
     const change = (e)=>{
-        setMsg(e.target.value)
+        setReq(e.target.value)
     }
     const click = (e)=>{
         e.preventDefault();
-        setMessages([...messages,newMsg(msg,chatId)])
+        setMessages([...messages,newMsg(req,chatId)])
     }
      return(
         <div>
-            <input name="message" type="text" value={msg} onChange={change}/>
+            <input name="message" type="text" value={req} onChange={change}/>
             <button onClick={click} >send</button>
         </div>
     )
