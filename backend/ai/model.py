@@ -1,6 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-
+#general mdoel
 model = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    temperature=0.8
+    model="gemini-3.8-flash",
 )

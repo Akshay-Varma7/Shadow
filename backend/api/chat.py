@@ -1,23 +1,28 @@
-from fastapi import APIRouter, Depends, 
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
-from backend.db.session import SessionLocal
-from backend.models.chat import ChatCheck #input validation
+from backend.db.session import get_db
+from backend.models.chat import ChatResponse
 from backend.services.chat_service import ChatService
 
 router = APIRouter()
 
-def get_chat_service() -> ChatService:#
-    return ChatService(session=SessionLocal())
 
-@router.get("/",response_model=list[ChatCheck])#response_model
-def get_chats(service: ChatService = Depends(get_chat_service)):
+def get_chat_service(
+    db: Session = Depends(get_db),
+) -> ChatService:
+    return ChatService(session=db)
+
+
+@router.get("/", response_model=list[ChatResponse])
+def get_chats(
+    service: ChatService = Depends(get_chat_service),
+):
     return service.get_chats()
 
-@router.post("/",response_model=ChatCheck)
-def create_chat(service: ChatService = Depends(get_chat_service)):
+
+@router.post("/", response_model=ChatResponse)
+def create_chat(
+    service: ChatService = Depends(get_chat_service),
+):
     return service.create_chat()
-
-# @router.put("/",)
-# def update_chat():#lastUpdatedAt,latestCycle
-
-#how async and why not awaits

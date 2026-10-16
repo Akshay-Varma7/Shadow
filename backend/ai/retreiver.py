@@ -1,4 +1,4 @@
-from ingest import vectorstore
+from backend.ai.ingest import vectorstore
 
 retriever = vectorstore.as_retriever(
     search_kwargs={"k": 5}

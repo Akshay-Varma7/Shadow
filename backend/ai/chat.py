@@ -1,41 +1,32 @@
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import BaseMessage
 
-from model import model
-from prompt import prompt
-from retriever import retriever, format_docs
-from schemas import MemeResponse
-
+from backend.ai.model import model
+from backend.ai.prompt import prompt
+from backend.ai.retreiver import retriever, format_docs
+from backend.ai.schemas import MemeResponse
 
 structured_model = model.with_structured_output(MemeResponse)
 
 rag_chain = (
     {
-        "context": retriever | format_docs,
+        # "context": retriever | format_docs
+        "context": (
+            (lambda x: x["question"])
+            | retriever
+            | format_docs
+        ),
         "question": lambda x: x["question"],
-        "history": lambda x: x["history"]
+        "history": lambda x: x["history"],
     }
     | prompt
     | structured_model
 )
 
-
-history = []
-
-while True:
-
-    question = input("You: ")
-
-    result = rag_chain.invoke({
+def generate_reply(
+    question: str,
+    history: list[BaseMessage] | None = None,
+) -> MemeResponse:
+    return rag_chain.invoke({
         "question": question,
-        "history": history
+        "history": history or [],
     })
-
-    history.append(
-        HumanMessage(content=question)
-    )
-
-    history.append(
-        AIMessage(content=result.funny_response)
-    )
-
-    print("AI:", result.funny_response)

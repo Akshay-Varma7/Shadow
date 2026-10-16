@@ -4,9 +4,9 @@ from datetime import datetime#python type
 from zoneinfo import ZoneInfo
 from enum import Enum
 
-class Role(str,Enum):
-    USER = "user"#not dict for:
-    SYSTEM = "system"
+class Role(str, Enum):
+    USER = "user"#not dict:
+    ASSISTANT = "assistant"
 
 def now():
     return datetime.now(ZoneInfo("Asia/Kolkata"))
@@ -36,8 +36,12 @@ class Message(Base):
     cycle_id: Mapped[int] = mapped_column(nullable=False)#?
     message: Mapped[str] = mapped_column(nullable=False)
     role: Mapped[Role] = mapped_column(
-        SQLEnum(Role),
-        nullable=False
+        SQLEnum(
+            Role,
+            name="role",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
+        nullable=False,
     )
     gif_url: Mapped[str | None] = mapped_column(nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=now)#or 1st is type
