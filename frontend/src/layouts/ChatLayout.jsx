@@ -11,9 +11,9 @@ function ChatLayout(){
                 <SidePage/>
             </aside>
 
-            <main>
-                <Outlet/>
-            </main> 
+            <div className="main-content">
+                <Outlet />
+            </div> 
         </div>
     )
 }

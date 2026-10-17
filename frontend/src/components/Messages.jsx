@@ -1,22 +1,28 @@
 import PromptMsg from "./PromptMsg";
 import ResponseMsg from "./ResponseMsg";
 
-function Messages({messages,setMessages}){
-    return(
-        <>
-        {
-            messages.map((m)=>{
-                if(m.isPrompt){
-                    return <PromptMsg msg={m.message} key={m.messageId}/>
-                }else if(m.isResponse){
-                    return <ResponseMsg msg={m.message} key={m.messageId}/>
-                }
-                return null;//if neither true imp
-            })
-        }
-        </>
-    )
+function Messages({ messages }) {
+    return (
+        <div className="message-list">
+            {messages.map((m) => (
+                <div
+                    key={m.messageId}
+                    className={`message-row ${
+                        m.isPrompt ? "user-row" : "assistant-row"
+                    }`}
+                >
+                    {m.isPrompt ? (
+                        <PromptMsg msg={m.message} />
+                    ) : m.isResponse ? (
+                        <ResponseMsg
+                            msg={m.message}
+                            gifUrl={m.gifUrl}
+                        />
+                    ) : null}
+                </div>
+            ))}
+        </div>
+    );
 }
-//for one jsx inside it level {} for dynamic and js
-//{[]} every inside []
+
 export default Messages;
